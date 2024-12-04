@@ -21,15 +21,25 @@ services:
     #           count: 1
     #           capabilities: [gpu]
 
+  searxng:
+    extends:
+      file: docker-compose.searxng.yaml
+      service: searxng
+    networks:
+      - backend
+      
   open-webui:
     extends:
       file: docker-compose.open-webui.yaml
       service: open-webui
     depends_on:
       - ollama
+      - searxng
+      - tika
     networks:
       - frontend
       - backend
+      
 
 networks:
   frontend:
