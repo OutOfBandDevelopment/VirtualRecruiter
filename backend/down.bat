@@ -1,6 +1,12 @@
-docker compose ^
+
+SETLOCAL
+
+SET PROJECT_EXTENSION=
+IF NOT "%1"=="" SET PROJECT_EXTENSION=-%1
+
+CALL docker compose ^
 --project-name openwebui ^
---file docker-compose.yaml ^
---file docker-compose.searxng.yaml ^
---file docker-compose.apache-tika.yaml ^
+--file docker-compose%PROJECT_EXTENSION%.yaml ^
 down
+
+ENDLOCAL
