@@ -1,5 +1,4 @@
 services:
-
   tika:
     extends:
       file: docker-compose.apache-tika.yaml
@@ -30,8 +29,10 @@ services:
 
   open-webui:
     extends:
-      file: docker-compose.open-webui.yaml
+      file: docker-compose.open-web-ui.yaml
       service: open-webui
+    # environment:
+    #   USE_CUDA_DOCKER: True
     depends_on:
       - ollama
       - searxng
@@ -39,6 +40,13 @@ services:
     networks:
       - frontend
       - backend
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
       
 
 networks:
@@ -46,3 +54,8 @@ networks:
     driver: bridge
   backend:
     driver: bridge
+    
+volumes:
+    open-webui-docs:
+    open-webui-data:
+    ollama-models:

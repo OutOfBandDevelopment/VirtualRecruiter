@@ -30,7 +30,7 @@ services:
       
   open-webui:
     extends:
-      file: docker-compose.open-webui.yaml
+      file: docker-compose.open-web-ui.yaml
       service: open-webui
     depends_on:
       - ollama
@@ -46,3 +46,8 @@ networks:
     driver: bridge
   backend:
     driver: bridge
+    
+volumes:
+    open-webui-docs:
+    open-webui-data:
+    ollama-models:

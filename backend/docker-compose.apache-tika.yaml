@@ -1,13 +1,7 @@
 services:
-  # open-webui:
-  #   environment:
-  #     USE_TIKA: True
-  #     TIKA_SERVER_URL: "http://tika:9998"
-  #     CONTENT_EXTRACTION_ENGINE: tika
-
   tika:
     image: apache/tika:latest-full
     container_name: tika
     ports:
       - "9998:9998"
-    restart: always
+    restart: 'unless-stopped'
