@@ -1,14 +1,19 @@
+@ECHO OFF
 
 SETLOCAL
 
-SET PROJECT_EXTENSION=
-IF NOT "%1"=="" SET PROJECT_EXTENSION=-%1
-
-CALL container-config.bat
+CALL container-config %*
 
 CALL docker compose ^
---project-name %CONTAINER_GROUP% ^
---file docker-compose%PROJECT_EXTENSION%.yaml ^
-pull
+--project-name %APP_PROJECT% ^
+--file docker-compose-%APP_MODE%.yaml ^
+pull %EXTRA_ARGS%
 
+GOTO :EOF
+
+:ERROR
+ECHO Error Code: %LAST_ERROR%
+EXIT /B %LAST_ERROR%
+
+:EOF
 ENDLOCAL

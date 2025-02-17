@@ -1,14 +1,10 @@
 @ECHO OFF
 SETLOCAL
-
-SET PROJECT_EXTENSION_RUN=
-IF NOT "%1"=="" SET PROJECT_EXTENSION_RUN=%1
-
 CALL container-config.bat
 
-CALL pull %PROJECT_EXTENSION_RUN% && ^
-CALL build %PROJECT_EXTENSION_RUN% && ^
-CALL up %PROJECT_EXTENSION_RUN% && ^
+CALL pull && ^
+CALL build && ^
+CALL up && ^
 CALL pull-models
 
 ENDLOCAL

@@ -1,1 +1,0 @@
-CALL pull cuda

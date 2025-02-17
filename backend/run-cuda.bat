@@ -1,1 +1,0 @@
-CALL run cuda

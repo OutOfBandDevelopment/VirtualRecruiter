@@ -1,9 +1,9 @@
 services:
 
-  tika:
+  apache-tika:
     extends:
       file: docker-compose.apache-tika.yaml
-      service: tika
+      service: apache-tika
     networks:
       - backend
 
@@ -27,18 +27,27 @@ services:
       service: searxng
     networks:
       - backend
-      
+
   open-webui:
     extends:
       file: docker-compose.open-web-ui.yaml
       service: open-webui
+    # environment:
+    #   USE_CUDA_DOCKER: True
     depends_on:
       - ollama
       - searxng
-      - tika
+      - apache-tika
     networks:
       - frontend
       - backend
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
       
 
 networks:
