@@ -5,14 +5,20 @@ services:
       file: docker-compose.apache-tika.yaml
       service: apache-tika
     networks:
-      - backend
+    - backend
+    ports:
+    - ${SERVER_PORT_APACHE_TIKA}:9998
+    restart: 'unless-stopped'
 
   ollama:
     extends:
       file: docker-compose.ollama.yaml
       service: ollama
     networks:
-      - backend
+    - backend
+    ports:
+    - ${SERVER_PORT_OLLAMA}:11434
+    restart: 'unless-stopped'
     # deploy:
     #   resources:
     #     reservations:
@@ -26,7 +32,10 @@ services:
       file: docker-compose.searxng.yaml
       service: searxng
     networks:
-      - backend
+    - backend
+    ports:
+      - ${SERVER_PORT_SEARXNG}:8080
+    restart: 'unless-stopped'
 
   open-webui:
     extends:
@@ -35,12 +44,15 @@ services:
     # environment:
     #   USE_CUDA_DOCKER: True
     depends_on:
-      - ollama
-      - searxng
-      - apache-tika
+    - ollama
+    - searxng
+    - apache-tika
     networks:
-      - frontend
-      - backend
+    - frontend
+    - backend
+    ports:
+    - ${SERVER_PORT_OPEN_WEBUI}:8080
+    restart: 'unless-stopped'
     # deploy:
     #   resources:
     #     reservations:
